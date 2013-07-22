@@ -1,0 +1,106 @@
+<title>Recommender Demo #1</title>
+<link type="text/css" rel="stylesheet" href="http://cdn.jsdelivr.net/skeleton/1.2/stylesheets/base.css" />
+<link type="text/css" rel="stylesheet" href="http://cdn.jsdelivr.net/skeleton/1.2/stylesheets/layout.css" />
+<link type="text/css" rel="stylesheet" href="http://cdn.jsdelivr.net/skeleton/1.2/stylesheets/skeleton.css" />
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.1/underscore-min.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/coffee-script/1.6.3/coffee-script.min.js"></script>
+<script type="text/javascript" src="http://nodeca.github.io/js-yaml/js/js-yaml.js"></script>
+
+<script type="text/coffeescript" src="../recommender.coffee"></script>
+<script type="text/coffeescript" src="../report.coffee"></script>
+
+<div class="container">
+
+    <h1 style="margin-top:50px">Recommender Demo #1</h1>
+    <p>
+    Friend data, time-desires, and basic probability are used to customize the types of activity recommendations featured.<br>
+    by <a href="http://nxhx.org">Joe Edelman</a>
+    for <a href="http://timewellspent.github.io">The Foundation for Lives Well Lived</a>
+
+    <h3>Input</h3>
+<textarea id="example-data" style="width:98%;height: 160px; background-color:#ccc">
+# relationship labels: crafty, smart, active, simple, sweet, crunk, unconventional
+# time desires are:  above + fresh_air
+
+---
+joe:
+    environment: urban
+    wants_hours: 
+        fresh_air: 8
+        sweet: 5
+        active: 3
+    friends: 
+        tristan: 
+            simple: [0.2, 0.4]
+            smart:  [0.4, 0.5]
+        phil:
+            unconventional:  [0.8, 0.8]
+            simple: [0.2, 0.5]
+        kimmai:
+            active: [0.5, 0.8]
+        kat:
+            sweet: [0.9, 0.9]
+
+
+tristan:
+    environment: urban
+    wants_hours: 
+        smart: 4
+        unconventional: 4
+        simple: 2
+    friends: 
+        joe: 
+            smart: [0.2, 0.4]
+            simple: [0.1, 0.3]
+        aza:
+            unconventional: [0.4, 0.6]
+            simple: [0.1, 0.1]
+        greg:
+            smart: [0.4, 0.7]
+            simple: [0.2, 0.3]
+        esme:
+            smart: [0.2, 0.2]
+            simple: [0.2, 0.6]
+
+
+kimmai:
+    environment: urban
+    wants_hours:
+        crunk: 14
+        crafty: 3
+        active: 2
+    friends:
+        joe:
+            active: [0.5, 0.6]
+            crunk: [0.1, 0.2]
+        jayson:
+            crunk: [0.8, 0.9]
+            active: [0.1, 0.3]
+        hang:
+            crafty: [0.8, 0.5]
+
+isolated_farmhand:
+    environment: rural
+    wants_hours:
+        smart: 8
+        crafty: 4
+    friends:
+        mom:
+            crafty: [0.1, 0.1]
+
+
+</textarea>
+
+    <h3>Output</h3><p class="well" id="report"></p>
+
+    <script>
+    window.run = function(){
+        function $(x){ return document.getElementById(x); }
+        $('report').innerHTML = Report.generate( jsyaml.load($('example-data').value) );
+    }
+    </script>
+    <button onclick="window.run()">Run</button>
+
+    <p class="text-info"><small><a href="https://github.com/timewellspent/recommender">github.com/timewellspent/recommender</a></small></p> 
+
+</div>
